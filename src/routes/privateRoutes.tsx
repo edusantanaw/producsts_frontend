@@ -1,5 +1,5 @@
 import Home from "../pages/home";
-import Log from "../pages/logs";
+import Log from "../pages/logs/index.tsx";
 
 export type IRoute = {
   element: JSX.Element;
