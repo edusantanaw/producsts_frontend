@@ -24,8 +24,19 @@ const ProductModal = ({ action, data, isEdit, handleClose }: props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  
+  function validateFields() {
+    if ((description ?? "").length < 3) return "Descrição invalida!";
+    if ((name ?? "").length < 3) return "Nome invalido!";
+  }
+
   async function handleAction() {
     if (error) setError(() => null);
+    const validate = validateFields()
+    if(validate) {
+      setError(validate)
+      return
+    }
     setLoading(() => true);
     const maybeError = await action({
       description,

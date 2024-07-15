@@ -1,6 +1,7 @@
 import { createContext, useLayoutEffect, useState } from "react";
 import { loginService } from "../../services/auth";
 import { TOKEN_KEY } from "../constants";
+import { validateEmail } from "../utils/emailValidator";
 
 type IAuthContext = {
   token: string | null;
@@ -20,8 +21,19 @@ export const AuthContextProvider = ({ children }: props) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  function validateFields(email: string, password: string) {
+    const isEmail = validateEmail(email!);
+    if (!isEmail) return "E-mail invalido";
+    if ((password ?? "").length < 3) return "Senha invalida!";
+  }
+
   async function handleLogin(email: string, password: string) {
     if (error) setError(null);
+    const maybeError = validateFields(email, password);
+    if (maybeError) {
+      setError(maybeError);
+      return;
+    }
     setLoading(() => true);
     try {
       const response = await loginService(email, password);

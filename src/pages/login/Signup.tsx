@@ -7,6 +7,7 @@ import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import { Label } from "../../shared/styles/input";
 import { AuthContainer, AuthForm } from "./style";
 import SweetAlert from "../../shared/components/SweetAlert";
+import { validateEmail } from "../../shared/utils/emailValidator";
 
 const Signup = () => {
   const [email, setEmail] = useState<string | undefined>();
@@ -18,13 +19,25 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  function validateFields() {
+    const isEmail = validateEmail(email!);
+    if (!isEmail) return "E-mail invalido";
+    if ((password ?? "").length < 3) return "Senha invalida!";
+    if ((name ?? "").length < 3) return "Nome invalido!";
+  }
+
   async function handleCreateAccount() {
     if (!email || !password || !name) return;
     if (error) setError(() => null);
+    const maybeError = validateFields();
+    if (maybeError) {
+      setError(maybeError);
+      return;
+    }
     setLoading(() => true);
     try {
       await createAccountService({ name, email, password });
-      setShowSweeatAlert(true)
+      setShowSweeatAlert(true);
     } catch (error) {
       const { message } = error as Error;
       setError(message);
