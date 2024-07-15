@@ -3,6 +3,7 @@
 ## Organização de pastas
 * @types: A pasta @types é onde estão localizados os nossos tipos globais.
 * pages: A pasta pages é onde estão localizadas as páginas disponíveis no sistema e também seus subcomponentes..
+* routes: A pasta routes é onde registramos as nossas rotas.
 * services: A pasta services é onde estão localizadas as funções que acessam sistemas externos como a nossa aplicação backend.
 * shared: A pasta shared é onde estão localizados os componentes, constantes, utilitarios, estilos, contextos e hooks que podem ser reutilizados em diversas partes da aplicação.
 
