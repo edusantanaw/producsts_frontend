@@ -8,15 +8,18 @@ import { Button } from "../../shared/components/Button";
 import ConfirmModal from "../../shared/components/ConfirmModal";
 import { useFetchList } from "../../shared/hooks/useFetch";
 import { Container, Title } from "../../shared/styles/global";
-import { Header, List } from "./style";
-import ProductItem from "./components/ProductItem";
 import DeleteAllModal from "./components/DeleteAllModal";
+import ProductItem from "./components/ProductItem";
 import ProductModal from "./components/ProductModal";
+import SearchBar from "./components/SearchBar";
+import { Header, List } from "./style";
 
 const Home = () => {
   const [testProductsModal, setTestProductsModal] = useState<boolean>(false);
   const [handleDeleteModal, setHandleDeleteModal] = useState<boolean>(false);
   const [createProductModal, setCreateProductModal] = useState<boolean>(false);
+
+  const [filter, setFilter] = useState<string>("");
 
   const { data, addItemToList, clearList, deleteFromList, updateListItem } =
     useFetchList<IProduct, IProduct[]>({
@@ -38,6 +41,12 @@ const Home = () => {
       return error as Error;
     }
   }
+
+  const filterdProducts = (data ?? []).filter(
+    (e) =>
+      e.name.toLowerCase().includes(filter.toLowerCase()) ||
+      e.description.includes(filter.toLowerCase())
+  );
 
   return (
     <Container>
@@ -63,6 +72,7 @@ const Home = () => {
           />
         </div>
       </Header>
+      <SearchBar value={filter} onChange={(e) => setFilter(e.target.value)} />
       {testProductsModal && (
         <ConfirmModal
           action={handleCreateTestProducts}
@@ -84,7 +94,7 @@ const Home = () => {
       )}
       <List>
         {data &&
-          data.map((e) => (
+          filterdProducts.map((e) => (
             <ProductItem
               deleteItemFromList={deleteFromList}
               updateListItem={updateListItem}

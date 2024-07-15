@@ -1,12 +1,12 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { IProduct } from "../../../@types/model";
-import { Button } from "../../../shared/components/Button";
-import { Input } from "../../../shared/components/Input";
-import LoadingSpinner from "../../../shared/components/LoadingSpinner";
 import Modal from "../../../shared/components/Modal";
+import { Form } from "./style";
 import { Label } from "../../../shared/styles/input";
+import { Input } from "../../../shared/components/Input";
 import { removeNotBrlValue } from "../../../shared/utils/removeNotBrlValue";
+import LoadingSpinner from "../../../shared/components/LoadingSpinner";
+import { Button } from "../../../shared/components/Button";
 
 interface props {
   data?: IProduct;
@@ -14,29 +14,6 @@ interface props {
   isEdit?: boolean;
   handleClose: () => void;
 }
-
-const Form = styled.div`
-  width: 24em;
-  background-color: #262627;
-  border-radius: 10px;
-  padding: 2em;
-  align-self: center;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1em;
-  .input {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-  }
-
-  #error {
-    color: #ff0202;
-  }
-`;
 
 const ProductModal = ({ action, data, isEdit, handleClose }: props) => {
   const [name, setName] = useState<string>(data?.name ?? "");
@@ -56,7 +33,7 @@ const ProductModal = ({ action, data, isEdit, handleClose }: props) => {
       price: Number(price?.replace(",", ".") ?? 0),
     });
     if (maybeError) setError(maybeError.message);
-    else handleClose()
+    else handleClose();
     setLoading(() => false);
   }
 

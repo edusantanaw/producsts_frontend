@@ -17,3 +17,19 @@ export async function loginService(email: string, password: string) {
     throw new Error(response?.data.message ?? "Erro desconhecido");
   }
 }
+
+type data = {
+  name: string;
+  password: string;
+  email: string;
+};
+
+export async function createAccountService(data: data) {
+  try {
+    const response = await Api.post<unknown>("/api/user", data);
+    return response.data;
+  } catch (error) {
+    const { response } = error as AxiosError<ApiError>;
+    throw new Error(response?.data.message ?? "Erro desconhecido");
+  }
+}

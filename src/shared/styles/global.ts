@@ -18,13 +18,13 @@ const Container = styled.section`
 
   @media (max-width: 1050px) {
     padding: 2em;
-}
+  }
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   font-weight: 400;
   color: #ee0571;
-
+  font-size: 1.8em;
 `;
 
 export { GlobalStyle, Container, Title };
