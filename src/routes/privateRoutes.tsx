@@ -12,7 +12,7 @@ export default [
     element: <Home />,
   },
   {
-    route: "/log",
+    route: "/logs",
     element: <Log />,
   },
 ] as IRoute[];

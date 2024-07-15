@@ -13,13 +13,15 @@ import ProductItem from "./components/ProductItem";
 import ProductModal from "./components/ProductModal";
 import SearchBar from "./components/SearchBar";
 import { Header, List } from "./style";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [testProductsModal, setTestProductsModal] = useState<boolean>(false);
   const [handleDeleteModal, setHandleDeleteModal] = useState<boolean>(false);
   const [createProductModal, setCreateProductModal] = useState<boolean>(false);
-
   const [filter, setFilter] = useState<string>("");
+
+  const navigate = useNavigate()
 
   const { data, addItemToList, clearList, deleteFromList, updateListItem } =
     useFetchList<IProduct, IProduct[]>({
@@ -69,6 +71,12 @@ const Home = () => {
             width="13em"
             title="Novo produto"
             background="#27b105"
+          />
+          <Button
+            action={() => navigate("/logs")}
+            width="13em"
+            title="Ver logs"
+            background="#656664"
           />
         </div>
       </Header>

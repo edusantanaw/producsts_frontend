@@ -1,7 +1,5 @@
 # TESTE REACT
 
-Sistema disponível em: https://wswork-desafio-es.netlify.app/
-
 ## Organização de pastas
 * @types: A pasta @types é onde estão localizados os nossos tipos globais.
 * pages: A pasta pages é onde estão localizadas as páginas disponíveis no sistema e também seus subcomponentes..
@@ -15,18 +13,21 @@ Sistema disponível em: https://wswork-desafio-es.netlify.app/
 Para o uso dos componentes criados, basta conferir as interfaces definidas no próprio arquivo onde está localizado o componente:
 
 ```ts
-interface props {
-  editMode?: boolean;
-  car?: car;
-  handleClose: () => void;
-  action: (data: carData) => Promise<Error | null>;
-}
+type props<T, R> = {
+  route: string;
+  dependences?: unknown[];
+  getResponse: (data: R) => T[];
+};
 
-type fuel = "FLEX" | "DIESEL";
+export function useFetchList<T extends hasId, R>({
+  route,
+  dependences = [],
+  getResponse,
+}: props<T, R>) {
+  const [data, setData] = useState<T[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-const currentDate = new Date();
-
-const CarModal = ({ editMode, handleClose, action, car }: props) => {
 ```
 
 ## Como executar o projeto?
@@ -34,7 +35,7 @@ const CarModal = ({ editMode, handleClose, action, car }: props) => {
 Primeiramente será necessário alterar a VITE_BASE_URL que está localizada no arquivo .env
 
 ```env 
-VITE_BASE_URL="https://backend-java-car.onrender.com"
+VITE_BASE_URL="http://localhost:8080"
 ```
 Após isto, é só executar o seguinte comando no terminal: 
 
