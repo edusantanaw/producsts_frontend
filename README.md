@@ -38,9 +38,10 @@ Primeiramente será necessário alterar a VITE_BASE_URL que está localizada no 
 ```env 
 VITE_BASE_URL="http://localhost:8080"
 ```
-Após isto, é só executar o seguinte comando no terminal: 
+Após isto, é só executar os seguintes comandos no terminal: 
 
 ```.sh
+  npm install
   npm run dev
 ```
 
